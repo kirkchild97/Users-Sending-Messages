@@ -1,0 +1,35 @@
+from flask import request, session, flash, redirect, render_template, url_for
+from flask_bcrypt import Bcrypt as b
+from flask_app.models.user import User
+from flask_app import app
+
+@app.route('/')
+def register_login_page():
+    return render_template('loginPage.html')
+
+@app.route('/try_register', methods = ['POST'])
+def register_user():
+    pass
+
+@app.route('/try_login', methods = ['POST'])
+def login_user():
+    pass
+
+@app.route('/user_page/<user_id>')
+def user_wall(user_id):
+    # Login information should be validated and proper info in session
+    pass
+
+@app.route('/user_page/<user_id>/message/send', methods = ['POST'])
+def send_message(user_id):
+    pass
+
+@app.route('/user_page/<user_id>/message/delete', methods = ['POST'])
+def delete_message(user_id):
+    # Ensure the user has the authority to delete message
+    pass
+
+@app.route('/hackwarning')
+def unauthorized_access_warning():
+    # Get IP address to scare the hacker :)
+    pass

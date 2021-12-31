@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/flask_app/static/style.css">
+    <title>Private Wall</title>
+</head>
+<body>
+        <!-- Navigation Bar -->
+        <div class="navbar bg-dark p-3">
+            <h1 class="text-primary">Dojo Wall</h1>
+            <a href="#" class="btn btn-primary">Button For Looks</a>
+        </div>
+        <!-- Contatnt Section -->
+        <div class="row mx-auto bg-secondary p-5">
+            <!-- Messages Recieved -->
+            <div class="col-5 bg-primary p-4 mx-auto">
+                <h2 class="text-warning border-bottom border-3 border-warning pb-2">Messages Recieved</h2>
+                {% for messages in variablename['recieved_messages'] %}
+                    <div class="row">
+                        <p class="col-4 text-warning">{{ message['author'] }}:</p>
+                        <p class="col-7 bg-light">{{ message['content'] }}</p>
+                        <a class="col-1" href="http://localhost:5000/userwall/{{ session['user_id'] }}/message/delete/{{ message['id'] }}">
+                            <img class="deleteicon bg-warning border border-2 border-dark rounded-circle p-1" src="/flask_app/static/img/trash_icon.png" alt="Delete Icon">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Send Messages -->
+            <div class="col-5 bg-primary p-4 mx-auto">
+                <form action="" method="post">
+                    <h2 class="text-warning border-bottom border-3 border-warning pb-2">Send Message</h2>
+                    <label class="text-warning" for="">To:
+                        <select name="send_to" id="send_to">
+                            {% for user in variablename['users'] %}
+                                <option value="{{ user['id'] }}">{{ user['first_name'] }} {{ user['last_name'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label class="d-block mt-3" for="">
+                        <textarea name="message" id="message" cols="80" rows="15"></textarea>
+                    </label>
+                    <input class="btn btn-warning text-light mt-3 px-5 py-2 border border-dark border-2" type="submit" value="Send">
+                </form>
+            </div>
+        </div>
+</body>
+</html>

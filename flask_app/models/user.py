@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL as connect
-from models.message import Message
+from flask_app.models.message import Message
 
 class User:
     def __init__(self, data) -> None:

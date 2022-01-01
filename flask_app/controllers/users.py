@@ -1,7 +1,9 @@
 from flask import request, session, flash, redirect, render_template, url_for
-from flask_bcrypt import Bcrypt as b
+from flask_bcrypt import Bcrypt
 from flask_app.models.user import User
 from flask_app import app
+
+b = Bcrypt(app)
 
 @app.route('/')
 def register_login_page():
@@ -9,7 +11,26 @@ def register_login_page():
 
 @app.route('/try_register', methods = ['POST'])
 def register_user():
-    pass
+    # Validation First
+    data = {
+        'first_name' : request.form['f_name'],
+        'last_name' : request.form['l_name'],
+        'email' : request.form['email'],
+        'password' : [
+            request.form['password'],
+            request.form['con_password']
+        ]
+    }
+    if User.register_validation(data):
+        data['password'] = b.generate_password_hash(data['password'])
+        User.save_user(data)
+        return redirect('/registersuccess')
+    else:
+        return redirect('/')
+
+@app.route('/registersuccess')
+def register_success():
+    return render_template('registersuccess.html')
 
 @app.route('/try_login', methods = ['POST'])
 def login_user():
